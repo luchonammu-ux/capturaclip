@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  traefik:
+    image: traefik:v2.10
+    container_name: traefik
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./traefik.yml:/etc/traefik/traefik.yml:ro
+      - ./letsencrypt:/letsencrypt
+
+  backend:
+    build: ../backend
+    container_name: capturaclip-backend
+    restart: always
+    volumes:
+      - ../backend/downloads:/app/downloads
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.capturaclip-backend.rule=Host(`capturaclip.nammu.com.ar`) && (PathPrefix(`/api`) || PathPrefix(`/downloads`))"
+      - "traefik.http.routers.capturaclip-backend.entrypoints=websecure"
+      - "traefik.http.routers.capturaclip-backend.tls.certresolver=myresolver"
+      - "traefik.http.services.capturaclip-backend.loadbalancer.server.port=8000"
+
+  frontend:
+    build: ../frontend
+    container_name: capturaclip-frontend
+    restart: always
+    depends_on:
+      - backend
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.capturaclip-frontend.rule=Host(`capturaclip.nammu.com.ar`)"
+      - "traefik.http.routers.capturaclip-frontend.entrypoints=websecure"
+      - "traefik.http.routers.capturaclip-frontend.tls.certresolver=myresolver"
+      - "traefik.http.services.capturaclip-frontend.loadbalancer.server.port=3000"

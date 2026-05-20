@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes slideRight {
+  0% { transform: translateX(-100%); }
+  50% { transform: translateX(80%); }
+  100% { transform: translateX(-100%); }
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

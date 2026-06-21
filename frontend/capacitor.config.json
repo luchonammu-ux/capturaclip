@@ -1,0 +1,8 @@
+{
+  "appId": "com.clipcapture.app",
+  "appName": "CapturaClip",
+  "webDir": "out",
+  "server": {
+    "androidScheme": "https"
+  }
+}

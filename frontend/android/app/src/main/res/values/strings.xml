@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">CapturaClip</string>
+    <string name="title_activity_main">CapturaClip</string>
+    <string name="package_name">com.clipcapture.app</string>
+    <string name="custom_url_scheme">com.clipcapture.app</string>
+</resources>

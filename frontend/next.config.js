@@ -20,6 +20,8 @@ const nextConfig = {
         : 'http://localhost:8000/downloads/:path*',
     },
   ],
+  output: 'export',
+  images: { unoptimized: true },
 };
 
 export default nextConfig;
